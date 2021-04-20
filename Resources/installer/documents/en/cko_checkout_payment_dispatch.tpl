@@ -1,0 +1,1 @@
+<p>SEPA Mandate Reference: {$ckoSepaMandateReference}</p>

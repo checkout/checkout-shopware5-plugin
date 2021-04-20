@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="cko_checkout_payment.components.configuration.configuration_service"
+                 class="CkoCheckoutPayment\Components\Configuration\ConfigurationService">
+            <argument type="service" id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"/>
+            <argument type="service" id="models"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.logger.logger_service"
+                 class="CkoCheckoutPayment\Components\Logger\LoggerService">
+            <argument type="service" id="cko_checkout_payment.logger"/>
+            <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.order_provider.order_provider_service"
+                 class="CkoCheckoutPayment\Components\OrderProvider\OrderProviderService">
+            <argument type="service" id="cko_checkout_payment.shopware.models.order.repository"/>
+            <argument type="service" id="cko_checkout_payment.shopware.models.order.status.repository"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.payment_session.payment_session_service"
+                 class="CkoCheckoutPayment\Components\PaymentSession\PaymentSessionService">
+            <argument type="service" id="session"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.payment_session.payment_session_service_factory"
+                 class="CkoCheckoutPayment\Components\PaymentSession\PaymentSessionServiceFactory">
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.payment_status.payment_status_mapper_service"
+                 class="CkoCheckoutPayment\Components\PaymentStatusMapper\PaymentStatusMapperService">
+        </service>
+
+        <service id="cko_checkout_payment.components.payment_method_validator.payment_method_validator_service"
+                 class="CkoCheckoutPayment\Components\PaymentMethodValidator\PaymentMethodValidatorService">
+            <argument type="service" id="cko_checkout_payment.components.payment_session.payment_session_service"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"
+                 class="CkoCheckoutPayment\Components\DependencyProvider\DependencyProviderService">
+            <argument type="service" id="shopware_storefront.context_service"/>
+            <argument type="service" id="models"/>
+            <argument type="service" id="config"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.card_management.card_management_service"
+                 class="CkoCheckoutPayment\Components\CardManagement\CardManagementService">
+            <argument type="service" id="models"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.apple_pay.certificate_service"
+                 class="CkoCheckoutPayment\Components\ApplePay\CertificateService">
+            <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
+            <argument type="service" id="cko_checkout_payment.components.logger.logger_service" />
+			<argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
+        </service>
+
+        <service id="cko_checkout_payment.components.apple_pay.merchant_validation_service"
+                 class="CkoCheckoutPayment\Components\ApplePay\MerchantValidationService">
+            <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
+            <argument type="service" id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"/>
+        </service>
+
+		<service id="cko_checkout_payment.components.webhooks.webhooks_service"
+				 class="CkoCheckoutPayment\Components\Webhooks\WebhooksService">
+			<argument type="service" id="cko_checkout_payment.components.logger.logger_service"/>
+			<argument type="service" id="models"/>
+		</service>
+
+		<service id="cko_checkout_payment.components.checkout_api.webhooks.webhooks_service"
+				 class="CkoCheckoutPayment\Components\CheckoutApi\Webhooks\WebhooksService">
+			<argument type="service" id="cko_checkout_payment.components.checkout_api.api_client.checkout_api_client_service"/>
+			<argument type="service" id="cko_checkout_payment.components.logger.logger_service"/>
+			<argument type="service" id="models"/>
+		</service>
+
+        <service id="cko_checkout_payment.components.webhooks.event_queue_service"
+                 class="CkoCheckoutPayment\Components\Webhooks\EventQueueService">
+            <argument type="service" id="cko_checkout_payment.components.logger.logger_service" />
+            <argument type="service" id="models" />
+            <argument type="service" id="cko_checkout_payment.components.webhooks.webhooks_service" />
+        </service>
+
+    </services>
+</container>

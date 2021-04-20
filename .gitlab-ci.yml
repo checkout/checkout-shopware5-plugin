@@ -1,0 +1,44 @@
+stages:
+  - test
+
+cache:
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+
+variables:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_USER: shopware
+  MYSQL_PASSWORD: shopware
+  MYSQL_DATABASE: shopware
+  SHOPWARE_VERSION: 5.6.8
+  DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}"
+  TRUSTEDPROXIES: ""
+  ADMIN_EMAIL: "kaya@arvatis.com"
+  ADMIN_NAME: "arvatis"
+  ADMIN_USERNAME: "arvatis"
+  ADMIN_PASSWORD: "arvatis"
+  SHOP_URL: "https://gitlab-ci.cko-checkout-payment.testing"
+  PLUGIN_NAME: "CkoCheckoutPayment"
+
+phpunit:
+  stage: test
+  image: edbizarro/gitlab-ci-pipeline-php:7.2
+  services:
+    - mysql:5.7
+  script:
+    - mkdir -p /tmp/${CI_PROJECT_DIR}
+    - cp -R ${CI_PROJECT_DIR} /tmp/${CI_PROJECT_DIR}
+    - composer create-project shopware/composer-project /tmp/${CI_PROJECT_DIR}/${SHOPWARE_VERSION} --no-ansi --no-interaction --no-progress --stability=dev
+    - cd /tmp/${CI_PROJECT_DIR}/${SHOPWARE_VERSION}
+    - touch .env
+    - echo 'DATABASE_URL=${DATABASE_URL}' >> .env && echo 'SHOPWARE_ENV="dev"' >> .env && echo 'TRUSTEDPROXIES="${TRUSTEDPROXIES}"' >> .env
+    - echo 'ADMIN_EMAIL=${ADMIN_EMAIL}' >> .env && echo 'ADMIN_NAME="${ADMIN_NAME}"' >> .env && echo 'ADMIN_USERNAME=${ADMIN_USERNAME}' >> .env && echo 'ADMIN_PASSWORD=${ADMIN_PASSWORD}' >> .env
+    - echo 'SHOP_URL=${SHOP_URL}' >> .env && echo 'IMPORT_DEMODATA=n' >> .env && echo 'INSTALL_IMAGES=n' >> .env && echo 'DROP_DATABASE=y' >> .env
+    - chmod +x app/bin/install.sh
+    - ./app/bin/install.sh
+    - git clone http://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.arvatis.com/plugins-shopware-5/checkoutpayment.git custom/plugins/${PLUGIN_NAME}
+    - bin/console sw:plugin:refresh
+    - bin/console sw:plugin:install ${PLUGIN_NAME} --activate --clear-cache
+    - cd custom/plugins/${PLUGIN_NAME}
+    - composer install
+    - composer test
+    - rm -rf /tmp/${CI_PROJECT_DIR}/${SHOPWARE_VERSION}

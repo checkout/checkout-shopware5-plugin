@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.6/engine/Shopware/Components/Plugin/schema/plugin.xsd">
+    <label lang="de">CkoCheckoutPayment</label>
+    <label lang="en">CkoCheckoutPayment</label>
+    <version>1.0.1</version>
+    <copyright>(c) by checkout.com</copyright>
+    <license>GPL</license>
+    <link>http://checkout.com</link>
+    <author>checkout.com</author>
+	<description lang="de">Checkout.com Zahlungsanbieter API</description>
+	<description lang="en">Checkout.com Unified Payments API</description>
+
+    <compatibility minVersion="5.6.0"/>
+
+	<changelog version="1.0.1">
+		<changes lang="de">Behebung der Eventverarbeitungs-Reihenfolge</changes>
+		<changes lang="en">Fixing of event processing order</changes>
+	</changelog>
+
+    <changelog version="1.0.0">
+        <changes lang="de">Erste Veröffentlichung</changes>
+        <changes lang="en">Initial Release</changes>
+    </changelog>
+</plugin>

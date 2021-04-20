@@ -1,0 +1,165 @@
+#cko_new_card {
+  font-weight:@font-bold-weight;
+}
+
+#cko_creditcard, #cko_creditcard_display {
+  .unitize(max-width, 340);
+  fieldset {
+	.unitize-margin(10, 0, 0);
+	+ fieldset {
+	  border-top:0;
+	  margin-top:0;
+	}
+  }
+}
+
+.cko-checkout-payment-method {
+  .unitize(margin-bottom, 5);
+}
+
+.date-and-code {
+  display: flex;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  .unitize(height, 40);
+}
+.icon-container.payment-method {
+  right: 0;
+}
+.input-container.expiry-date {
+  .unitize(margin-right, 4);
+}
+.input-container.cvv {
+  .unitize(margin-left, 4);
+}
+
+.icon-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  .unitize(width, 26);
+  .unitize-margin(0, 7);
+}
+
+.icon-container.payment-method  {
+  transform: translateY(-50%) rotateY(90deg);
+  transition: opacity 0.15s ease-out;
+  opacity: 0;
+  top: 50%;
+}
+
+.icon-container.payment-method.show {
+  opacity: 1;
+  transition: all 0.4s ease-out;
+  transform: translateY(-50%) rotateY(0deg);
+}
+
+.icon-container.payment-method img {
+  width: 100%;
+}
+
+.card-number-frame, .expiry-date-frame, .cvv-frame {
+  .unitize(padding-left, 40);
+  width:100%;
+  .border-radius();
+  .box-shadow(inset 0 1px 1px @gray-dark);
+  background: @input-bg;
+  border: 1px solid @input-border;
+  border-top-color: darken(@input-border, 5%);
+
+  + .icon-error {
+	display:none;
+	right:0;
+  }
+
+  &.frame--focus {
+	.box-shadow(none);
+	border-color: @input-focus-border;
+	background: @input-focus-bg;
+	color: @input-focus-color;
+  }
+
+  &.frame--invalid {
+	background: @input-error-bg;
+	border-color: @input-error-border;
+	+ .icon-error {
+	  display: flex;
+	}
+  }
+}
+
+.error-message {
+  display: block;
+  color: #C9501C;
+  .unitize(font-size, 14.4);
+  .unitize-margin(8, 0, 0, 1);
+  font-weight: 300;
+}
+
+#pay-button {
+  border: none;
+  .unitize(border-radius, 3);
+  color: #FFF;
+  font-weight: 500;
+  .unitize(height, 40);
+  width: 100%;
+  background-color: #13395E;
+  box-shadow: 0 1px 3px 0 rgba(19,57,94,0.4);
+}
+
+#pay-button:active {
+  background-color: #0B2A49;
+  box-shadow: 0 1px 3px 0 rgba(19,57,94,0.4);
+}
+
+#pay-button:hover {
+  background-color: #15406B;
+  box-shadow: 0 2px 5px 0 rgba(19,57,94,0.4);
+}
+
+#pay-button:disabled {
+  background-color: #697887;
+  box-shadow: none;
+}
+
+#pay-button:not(:disabled) {
+  cursor: pointer;
+}
+
+.success-payment-message {
+  color: #13395E;
+  line-height: 1.4;
+}
+.token {
+  color: #b35e14;
+  .unitize(font-size, 14.4);
+  font-family: monospace;
+}
+
+/**
+IE11-targeted optimisations
+ */
+_:-ms-fullscreen, :root .icon-container {
+  display: block;
+}
+
+_:-ms-fullscreen, :root .icon-container img {
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  position: absolute;
+}
+
+_:-ms-fullscreen, #icon-card-number,
+_:-ms-fullscreen, #icon-expiry-date,
+_:-ms-fullscreen, #icon-cvv {
+  .unitize(left, 7);
+}
+
+#checkout-frames-card-number::-ms-clear {
+  display: none;
+}

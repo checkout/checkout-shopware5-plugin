@@ -1,0 +1,39 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__ . '/Components')
+    ->in(__DIR__ . '/Controllers')
+    ->in(__DIR__ . '/Subscribers')
+    ->in(__DIR__ . '/Tests');
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'heredoc_indentation' => true,
+        'heredoc_to_nowdoc' => true,
+        'yoda_style' => false,
+        'single_quote' => true,
+        'linebreak_after_opening_tag' => true,
+        'modernize_types_casting' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'no_whitespace_in_blank_line' => true,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        'visibility_required' => true,
+        'ternary_to_null_coalescing' => true,
+        'phpdoc_add_missing_param_annotation' => ['only_untyped' => true],
+        'phpdoc_order' => true,
+        'declare_strict_types' => true,
+        'doctrine_annotation_braces' => true,
+        'doctrine_annotation_indentation' => true,
+        'doctrine_annotation_spaces' => true,
+        'no_php4_constructor' => true,
+        'no_short_echo_tag' => true,
+        'doctrine_annotation_array_assignment' => true,
+        'list_syntax' => ['syntax' => 'short'],
+        'phpdoc_types_order' => ['null_adjustment' => 'always_last'],
+    ])
+    ->setFinder($finder);
