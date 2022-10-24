@@ -90,7 +90,7 @@
             };
         },
 
-        isApplePayAvailable() {
+        isApplePayAvailable: function() {
             if (typeof window.ApplePaySession === 'undefined') {
                 return false;
             }

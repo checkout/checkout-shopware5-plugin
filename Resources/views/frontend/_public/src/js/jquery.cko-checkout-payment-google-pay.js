@@ -14,6 +14,7 @@
 
         $googlePayForm: null,
         $googlePayButton: null,
+        buttonColor: 'default',
 
         savePaymentDataRequestUrl: null,
         allowedCardNetworks: '',
@@ -22,6 +23,7 @@
         environment: null,
         currentCurrency: null,
         totalPrice: null,
+        googleClient: null,
 
         allowedPaymentMethods: ['CARD', 'TOKENIZED_CARD'],
 
@@ -30,6 +32,8 @@
 
             this.$googlePayForm = this.$shippingPaymentForm.find(this.opts.googlePayFormSelector);
             this.$googlePayButton = $(this.opts.googlePayButtonSelector);
+            this.$googlePayButtonContainer = $(this.opts.googlePayButtonSelector + '-container');
+            this.buttonColor = this.$googlePayForm.data(this.opts.googlePayPaymentIdentifierPrefix + '-button-color') || 'default';
 
             this.savePaymentDataRequestUrl = this.$googlePayForm.data(this.opts.googlePayPaymentIdentifierPrefix + '-request-url') || null;
             this.allowedCardNetworks = this.$googlePayForm.data(this.opts.googlePayPaymentIdentifierPrefix + '-allowed-card-networks') || '';
@@ -38,7 +42,6 @@
             this.environment = this.$googlePayForm.data(this.opts.googlePayPaymentIdentifierPrefix + '-environment') || null;
             this.currentCurrency = this.$googlePayForm.data(this.opts.googlePayPaymentIdentifierPrefix + '-currency') || null;
             this.totalPrice = this.$googlePayForm.data(this.opts.googlePayPaymentIdentifierPrefix + '-total-price') || null;
-
             this.registerEventListeners();
 
             $.publish('plugin/ckoCheckoutPaymentGooglePay/init', this);
@@ -53,14 +56,6 @@
 
             $(this.opts.googlePayButtonSelector).on('click', $.proxy(this.onClickGooglePayButton, this));
             $.publish('plugin/ckoCheckoutPaymentGooglePay/registerEventListeners', this);
-        },
-
-        /**
-         * @see {@link https://developers.google.com/pay/api/web/reference/client#PaymentsClient|PaymentsClient constructor}
-         * @returns {google.payments.api.PaymentsClient} Google Pay API client
-         */
-        getPaymentsClient: function () {
-            return new google.payments.api.PaymentsClient({ environment: this.environment });
         },
 
         /**
@@ -109,7 +104,7 @@
                 currencyCode: this.currentCurrency
             };
 
-            this.getPaymentsClient().prefetchPaymentData(paymentDataRequest);
+            this.googleClient.prefetchPaymentData(paymentDataRequest);
 
             $.publish('plugin/ckoCheckoutPaymentGooglePay/prefetchGooglePaymentData', this, paymentDataRequest);
         },
@@ -153,12 +148,12 @@
         onClickGooglePayButton: function () {
             var me = this;
 
-            var paymentDataRequest = this.getGooglePaymentDataRequest();
-            paymentDataRequest.transactionInfo = this.getGoogleTransactionInfo();
+            var paymentDataRequest = me.getGooglePaymentDataRequest();
+            paymentDataRequest.transactionInfo = me.getGoogleTransactionInfo();
 
-            $.publish('plugin/ckoCheckoutPaymentGooglePay/onClickGooglePayButton/before', this, paymentDataRequest);
+            $.publish('plugin/ckoCheckoutPaymentGooglePay/onClickGooglePayButton/before', me, paymentDataRequest);
 
-            this.getPaymentsClient().loadPaymentData(paymentDataRequest)
+            this.googleClient.loadPaymentData(paymentDataRequest)
                 .then(function (paymentData) {
                         // handle the response
                         me.processPayment(paymentData);
@@ -169,15 +164,23 @@
                 }
             );
 
-            $.publish('plugin/ckoCheckoutPaymentGooglePay/onClickGooglePayButton/after', this, paymentDataRequest);
+            $.publish('plugin/ckoCheckoutPaymentGooglePay/onClickGooglePayButton/after', me, paymentDataRequest);
         },
 
         onGooglePayLoaded: function () {
             var me = this;
-
+            me.googleClient = new google.payments.api.PaymentsClient({ environment: this.environment });
             $.publish('plugin/ckoCheckoutPaymentGooglePay/onGooglePayLoaded/before', this);
 
-            this.getPaymentsClient().isReadyToPay({allowedPaymentMethods: this.allowedPaymentMethods})
+            const button = me.googleClient.createButton({
+                buttonColor: me.buttonColor,
+                buttonType: 'buy',
+                onClick: function () { me.onClickGooglePayButton() },
+            });
+            me.$googlePayButtonContainer.append(button);
+
+
+            me.googleClient.isReadyToPay({allowedPaymentMethods: this.allowedPaymentMethods})
                 .then(function (response) {
                     $.publish('plugin/ckoCheckoutPaymentGooglePay/onGooglePayLoaded/success', me, response);
 

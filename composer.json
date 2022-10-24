@@ -9,13 +9,17 @@
   "require": {
     "ext-openssl": "*",
     "ext-json": "*",
-    "checkout/checkout-sdk-php": "^1.0"
+    "checkout/checkout-sdk-php": "1.0.13"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5"
+    "phpunit/phpunit": "8.3.0",
+    "friendsofphp/php-cs-fixer": "^3.2",
+    "phpstan/phpstan": "^0.12.99"
   },
   "scripts": {
     "test": "vendor/phpunit/phpunit/phpunit --configuration phpunit.xml.dist --colors=always",
-    "php-cs": "chmod +x php-cs-fixer && ./php-cs-fixer fix --config=.php_cs.dist --using-cache=no --allow-risky=yes"
+    "fix-code-style": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=no --allow-risky=yes",
+    "check-code-style": "vendor/bin/php-cs-fixer fix -v --dry-run",
+    "code-analyse": "vendor/bin/phpstan analyse ."
   }
 }

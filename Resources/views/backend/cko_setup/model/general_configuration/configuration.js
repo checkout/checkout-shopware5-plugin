@@ -14,7 +14,8 @@ Ext.define('Shopware.apps.CkoSetup.model.GeneralConfiguration.Configuration', {
         { name: 'shopId', type: 'int' },
         { name: 'sandboxModeEnabled', type: 'bool' },
         { name: 'privateKey', type: 'string' },
-        { name: 'publicKey', type: 'string' }
+        { name: 'publicKey', type: 'string' },
+        { name: 'webhookSignatureKey', type: 'string' }
     ]
 });
 // {/block}

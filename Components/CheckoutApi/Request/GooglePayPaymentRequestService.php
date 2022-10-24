@@ -6,6 +6,7 @@ namespace CkoCheckoutPayment\Components\CheckoutApi\Request;
 
 use Checkout\Library\Exceptions\CheckoutException;
 use Checkout\Models\Payments\Payment;
+use Checkout\Models\Payments\ThreeDs;
 use Checkout\Models\Payments\TokenSource;
 use Checkout\Models\Tokens\GooglePay;
 use CkoCheckoutPayment\Components\CheckoutApi\AbstractCheckoutPaymentService;
@@ -35,8 +36,16 @@ class GooglePayPaymentRequestService extends AbstractCheckoutPaymentService impl
         try {
             $client = $this->createApiClient();
 
+            /** @var GooglePay $token */
             $token = $this->getToken($googlePayStruct);
-            $payment = $this->createPaymentRequestFromStruct(new TokenSource($token), $paymentRequestStruct);
+            $payment = $this->createPaymentRequestFromStruct(new TokenSource($token->getTokenId()), $paymentRequestStruct);
+
+            $enable3Ds = false;
+            if($token->getValue('token_format') && $token->getValue('token_format') === 'pan_only') {
+                $enable3Ds = true;
+            }
+
+            $payment->threeDs = new ThreeDs($enable3Ds);
 
             /** @var Payment $paymentRequest */
             $paymentRequest = $client->payments()->request($payment);
@@ -65,7 +74,7 @@ class GooglePayPaymentRequestService extends AbstractCheckoutPaymentService impl
         return true;
     }
 
-    private function getToken(GooglePayStruct $googlePayStruct): string
+    private function getToken(GooglePayStruct $googlePayStruct): GooglePay
     {
         $client = $this->createApiClient();
         $token = $client->tokens()->request(

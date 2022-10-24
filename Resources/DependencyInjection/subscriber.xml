@@ -4,19 +4,22 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="cko_checkout_payment.subscribers.cronjobs.cronjobs"
-                 class="CkoCheckoutPayment\Subscribers\Cronjobs\Cronjobs">
+                 class="CkoCheckoutPayment\Subscribers\Cronjobs\Cronjobs"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.webhooks.event_queue_service"/>
             <tag name="shopware.event_subscriber"/>
         </service>
 
         <service id="cko_checkout_payment.subscribers.frontend.frontend_assets_collector_subscriber"
-                 class="CkoCheckoutPayment\Subscribers\Frontend\FrontendAssetsCollectorSubscriber">
+                 class="CkoCheckoutPayment\Subscribers\Frontend\FrontendAssetsCollectorSubscriber"
+                 public="true">
             <argument>%cko_checkout_payment.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
 
         <service id="cko_checkout_payment.subscribers.frontend.frontend_checkout_subscriber"
-                 class="CkoCheckoutPayment\Subscribers\Frontend\FrontendCheckoutSubscriber">
+                 class="CkoCheckoutPayment\Subscribers\Frontend\FrontendCheckoutSubscriber"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
             <argument type="service" id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"/>
             <argument type="service" id="cko_checkout_payment.components.payment_session.payment_session_service"/>
@@ -32,23 +35,25 @@
         </service>
 
         <service id="cko_checkout_payment.subscribers.order.order_subscriber"
-                 class="CkoCheckoutPayment\Subscribers\Order\OrderSubscriber">
+                 class="CkoCheckoutPayment\Subscribers\Order\OrderSubscriber"
+                 public="true">
             <argument type="service" id="shopware_attribute.data_persister"/>
             <argument type="service" id="cko_checkout_payment.components.order_provider.order_provider_service"/>
-            <argument type="service" id="cko_checkout_payment.components.payment_method_validator.payment_method_validator_service"/>
             <argument type="service" id="cko_checkout_payment.components.payment_session.payment_session_service"/>
             <argument type="service" id="cko_checkout_payment.components.logger.logger_service"/>
             <tag name="shopware.event_subscriber"/>
         </service>
 
         <service id="cko_checkout_payment.subscribers.backend.backend_subscriber"
-                 class="CkoCheckoutPayment\Subscribers\Backend\BackendSubscriber">
+                 class="CkoCheckoutPayment\Subscribers\Backend\BackendSubscriber"
+                 public="true">
             <argument>%cko_checkout_payment.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
 
         <service id="cko_checkout_payment.subscribers.documents.invoice_document_subscriber"
-                 class="CkoCheckoutPayment\Subscribers\Documents\InvoiceDocumentSubscriber">
+                 class="CkoCheckoutPayment\Subscribers\Documents\InvoiceDocumentSubscriber"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
             <argument type="service" id="cko_checkout_payment.components.payment_method_validator.payment_method_validator_service"/>
             <argument type="service" id="dbal_connection"/>
@@ -57,7 +62,8 @@
         </service>
 
         <service id="cko_checkout_payment.subscribers.core.payment_means_subscriber"
-                 class="CkoCheckoutPayment\Subscribers\Core\PaymentMeansSubscriber">
+                 class="CkoCheckoutPayment\Subscribers\Core\PaymentMeansSubscriber"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
             <argument type="service" id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"/>
             <argument type="service" id="cko_checkout_payment.components.payment_method_validator.payment_method_validator_service"/>

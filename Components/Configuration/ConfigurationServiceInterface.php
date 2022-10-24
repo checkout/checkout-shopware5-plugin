@@ -9,12 +9,14 @@ use CkoCheckoutPayment\Components\PaymentMethods\CreditCardPaymentMethod;
 use CkoCheckoutPayment\Components\PaymentMethods\GooglePayPaymentMethod;
 use CkoCheckoutPayment\Components\PaymentMethods\PayPalPaymentMethod;
 use CkoCheckoutPayment\Components\PaymentMethods\SepaPaymentMethod;
+use CkoCheckoutPayment\Components\PaymentMethods\SofortPaymentMethod;
 use CkoCheckoutPayment\Models\Configuration\ApplePayConfiguration;
 use CkoCheckoutPayment\Models\Configuration\CreditCardConfiguration;
 use CkoCheckoutPayment\Models\Configuration\GeneralConfiguration;
 use CkoCheckoutPayment\Models\Configuration\GooglePayConfiguration;
 use CkoCheckoutPayment\Models\Configuration\PayPalConfiguration;
 use CkoCheckoutPayment\Models\Configuration\SepaConfiguration;
+use CkoCheckoutPayment\Models\Configuration\SofortConfiguration;
 use Shopware\Components\Model\ModelEntity;
 
 interface ConfigurationServiceInterface
@@ -24,7 +26,8 @@ interface ConfigurationServiceInterface
         GooglePayPaymentMethod::NAME => GooglePayConfiguration::class,
         CreditCardPaymentMethod::NAME => CreditCardConfiguration::class,
         PayPalPaymentMethod::NAME => PayPalConfiguration::class,
-        SepaPaymentMethod::NAME => SepaConfiguration::class
+        SepaPaymentMethod::NAME => SepaConfiguration::class,
+        SofortPaymentMethod::NAME => SofortConfiguration::class
     ];
 
     public function getGeneralConfiguration(?int $shopId, bool $useFallbackShop = true): GeneralConfiguration;

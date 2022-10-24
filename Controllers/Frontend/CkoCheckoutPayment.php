@@ -30,9 +30,10 @@ class Shopware_Controllers_Frontend_CkoCheckoutPayment extends AbstractCheckoutP
             }
 
             $shopId = $this->dependencyProviderService->getShop()->getId();
+            $paymentRequestStruct = $this->createDefaultPaymentRequest();
             $paymentDetailsResponse = $this->paymentDetailsService->getPaymentDetails($sessionId, $shopId);
 
-            $this->handlePaymentResponse($paymentDetailsResponse->getPaymentId(), $shopId);
+            $this->handlePaymentResponse($paymentDetailsResponse->getPaymentId(), $shopId, $paymentRequestStruct);
         } catch (CheckoutApiRequestException $checkoutApiRequestException) {
             $this->loggerService->error($checkoutApiRequestException->getMessage(), $checkoutApiRequestException->getContext());
             $this->handleFailedResponse();

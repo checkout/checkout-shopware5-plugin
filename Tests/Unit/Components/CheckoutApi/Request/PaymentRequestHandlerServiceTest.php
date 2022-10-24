@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CkoCheckoutPayment\Tests\Unit\Components\CheckoutApi\PaymentRequest;
+namespace CkoCheckoutPayment\Tests\Unit\Components\CheckoutApi\Request;
 
 use CkoCheckoutPayment\Components\CheckoutApi\Request\PaymentRequestHandlerService;
 use CkoCheckoutPayment\Components\CheckoutApi\Structs\Payment\PaymentRequestStruct;

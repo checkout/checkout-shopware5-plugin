@@ -10,6 +10,7 @@ use CkoCheckoutPayment\Models\Configuration\GeneralConfiguration;
 use CkoCheckoutPayment\Models\Configuration\GooglePayConfiguration;
 use CkoCheckoutPayment\Models\Configuration\PayPalConfiguration;
 use CkoCheckoutPayment\Models\Configuration\SepaConfiguration;
+use CkoCheckoutPayment\Models\Configuration\SofortConfiguration;
 use CkoCheckoutPayment\Models\Event;
 use CkoCheckoutPayment\Models\StoredCard;
 use Doctrine\DBAL\DBALException;
@@ -48,6 +49,10 @@ class SchemaInstaller implements InstallerInterface
 
     public function uninstall(UninstallContext $context): void
     {
+        if ($context->keepUserData()) {
+            return;
+        }
+
         $this->dropSchema();
     }
 
@@ -124,6 +129,7 @@ class SchemaInstaller implements InstallerInterface
             $this->modelManager->getClassMetadata(ApplePayConfiguration::class),
             $this->modelManager->getClassMetadata(GooglePayConfiguration::class),
             $this->modelManager->getClassMetadata(SepaConfiguration::class),
+            $this->modelManager->getClassMetadata(SofortConfiguration::class),
             $this->modelManager->getClassMetadata(CreditCardConfiguration::class),
             $this->modelManager->getClassMetadata(PayPalConfiguration::class)
         ];

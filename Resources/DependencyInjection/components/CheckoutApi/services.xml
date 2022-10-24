@@ -4,13 +4,15 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="cko_checkout_payment.components.checkout_api.api_client.checkout_api_client_service"
-                 class="CkoCheckoutPayment\Components\CheckoutApi\ApiClient\CheckoutApiClientService">
+                 class="CkoCheckoutPayment\Components\CheckoutApi\ApiClient\CheckoutApiClientService"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\AbstractCheckoutPaymentService"
-                 abstract="true">
+                 abstract="true"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.checkout_api.api_client.checkout_api_client_service"/>
             <argument type="service" id="cko_checkout_payment.components.configuration.configuration_service"/>
             <argument type="service" id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"/>
@@ -21,83 +23,98 @@
 
         <service id="cko_checkout_payment.components.checkout_api.request.actions.payment_actions_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\Actions\PaymentActionsRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"/>
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true"/>
 
         <service id="cko_checkout_payment.components.checkout_api.request.details.payment_details_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\Details\PaymentDetailsRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"/>
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true"/>
 
         <service id="cko_checkout_payment.components.checkout_api.request.capture.capture_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\Capture\CaptureRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"/>
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true"/>
 
         <service id="cko_checkout_payment.components.checkout_api.request.void.void_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\Void\VoidRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"/>
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true"/>
 
         <service id="cko_checkout_payment.components.checkout_api.request.refund.refund_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\Refund\RefundRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"/>
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true"/>
 
         <!-- Payment Request Services -->
 
         <service id="cko_checkout_payment.components.checkout_api.request.credit_card_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\CreditCardPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.eps_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\EpsPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.bancontact_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\BancontactPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.giropay_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\GiropayPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.googlepay_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\GooglePayPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.applepay_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\ApplePayPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
 		<service id="cko_checkout_payment.components.checkout_api.request.ideal_payment_request_service"
 				 class="CkoCheckoutPayment\Components\CheckoutApi\Request\IdealPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
 		</service>
 
 		<service id="cko_checkout_payment.components.checkout_api.request.przelewy24payment_request_service"
 				 class="CkoCheckoutPayment\Components\CheckoutApi\Request\Przelewy24PaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
 		</service>
 
 		<service id="cko_checkout_payment.components.checkout_api.request.sepa_payment_request_service"
 				 class="CkoCheckoutPayment\Components\CheckoutApi\Request\SepaPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
 		</service>
 
 		<service id="cko_checkout_payment.components.checkout_api.request.klarna_payment_request_service"
 				 class="CkoCheckoutPayment\Components\CheckoutApi\Request\KlarnaPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.checkout_api.builder.request_builder.klarna_request_builder_service"/>
 
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
@@ -105,18 +122,21 @@
 
         <service id="cko_checkout_payment.components.checkout_api.request.paypal_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\PayPalPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.sofort_payment_request_service"
                  class="CkoCheckoutPayment\Components\CheckoutApi\Request\SofortPaymentRequestService"
-                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service">
+                 parent="cko_checkout_payment.components.checkout_api.abstract_checkout_payment_service"
+                 public="true">
             <tag name="cko_checkout_payment.components.checkout_api.request.payment_request_service" />
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.builder.request_builder.klarna_request_builder_service"
-                 class="CkoCheckoutPayment\Components\CheckoutApi\Builder\RequestBuilder\KlarnaRequestBuilderService">
+                 class="CkoCheckoutPayment\Components\CheckoutApi\Builder\RequestBuilder\KlarnaRequestBuilderService"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.dependency_provider.dependency_provider_service"/>
             <argument type="service" id="cko_checkout_payment.components.checkout_api.api_client.checkout_api_client_service"/>
             <argument type="service" id="cko_checkout_payment.components.logger.logger_service"/>
@@ -124,13 +144,15 @@
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.builder.response_builder.payment_details_response_builder_service"
-                 class="CkoCheckoutPayment\Components\CheckoutApi\Builder\ResponseBuilder\PaymentDetailsResponseBuilderService">
+                 class="CkoCheckoutPayment\Components\CheckoutApi\Builder\ResponseBuilder\PaymentDetailsResponseBuilderService"
+                 public="true">
             <argument type="service" id="cko_checkout_payment.components.payment_status.payment_status_mapper_service"/>
             <argument type="service" id="cko_checkout_payment.components.order_provider.order_provider_service"/>
             <argument type="service" id="shopware.components.state_translator"/>
         </service>
 
         <service id="cko_checkout_payment.components.checkout_api.request.payment_request_handler_service"
-                 class="CkoCheckoutPayment\Components\CheckoutApi\Request\PaymentRequestHandlerService"/>
+                 class="CkoCheckoutPayment\Components\CheckoutApi\Request\PaymentRequestHandlerService"
+                 public="true"/>
     </services>
 </container>

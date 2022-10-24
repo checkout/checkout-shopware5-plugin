@@ -3,27 +3,37 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="cko_checkout_payment.shopware.models.order.repository" class="Shopware\Models\Property\Repository">
+        <service id="cko_checkout_payment.shopware.models.order.repository"
+                 class="Shopware\Models\Property\Repository"
+                 public="true">
             <factory service="models" method="getRepository"/>
             <argument type="string">Shopware\Models\Order\Order</argument>
         </service>
 
-        <service id="cko_checkout_payment.shopware.models.order.status.repository" class="Shopware\Models\Property\Repository">
+        <service id="cko_checkout_payment.shopware.models.order.status.repository"
+                 class="Shopware\Models\Property\Repository"
+                 public="true">
             <factory service="models" method="getRepository"/>
             <argument type="string">Shopware\Models\Order\Status</argument>
         </service>
 
-        <service id="cko_checkout_payment.shopware.models.country.repository" class="Shopware\Models\Property\Repository">
+        <service id="cko_checkout_payment.shopware.models.country.repository"
+                 class="Shopware\Models\Property\Repository"
+                 public="true">
             <factory service="models" method="getRepository"/>
             <argument type="string">Shopware\Models\Country\Country</argument>
         </service>
 
-        <service id="cko_checkout_payment.shopware.models.shop.currency.repository" class="Shopware\Models\Property\Repository">
+        <service id="cko_checkout_payment.shopware.models.shop.currency.repository"
+                 class="Shopware\Models\Property\Repository"
+                 public="true">
             <factory service="models" method="getRepository"/>
             <argument type="string">Shopware\Models\Shop\Currency</argument>
         </service>
 
-        <service id="cko_checkout_payment.shopware.models.config.element" class="Shopware\Models\Property\Repository">
+        <service id="cko_checkout_payment.shopware.models.config.element"
+                 class="Shopware\Models\Property\Repository"
+                 public="true">
             <factory service="models" method="getRepository"/>
             <argument type="string">Shopware\Models\Config\Element</argument>
         </service>
