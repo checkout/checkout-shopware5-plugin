@@ -79,6 +79,13 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.GeneralConfiguration.Configuration
                     helpText: '{s name="fieldset/configuration/publicKey/help"}{/s}',
                     allowBlank: false
                 },
+                {
+                    xtype: 'textfield',
+                    name: 'webhookSignatureKey',
+                    fieldLabel: '{s name="fieldset/configuration/webhookSignatureKey"}{/s}',
+                    helpText: '{s name="fieldset/configuration/webhookSignatureKey/help"}{/s}',
+                    allowBlank: true
+                },
 
                 me.toolbarContainer
             ]

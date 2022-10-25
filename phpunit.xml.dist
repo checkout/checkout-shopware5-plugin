@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-        backupGlobals="false"
-        backupStaticAttributes="false"
-        bootstrap="./Tests/Bootstrap.php"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        processIsolation="false"
-        stopOnFailure="false"
-        verbose="true">
+<phpunit bootstrap="./Tests/Bootstrap.php"
+         colors="true">
     <testsuite name="CkoCheckoutPayment Test Suite">
-        <directory>./Tests</directory>
+        <directory>Tests</directory>
     </testsuite>
 
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <whitelist>
             <directory suffix=".php">./</directory>
             <exclude>
                 <directory suffix=".php">./Tests</directory>
+                <directory suffix=".php">./vendor</directory>
 
                 <!-- Bootstrap -->
                 <file>CkoCheckoutPayment.php</file>
-                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -7,10 +7,10 @@ namespace CkoCheckoutPayment\Subscribers\Order;
 use CkoCheckoutPayment\Components\Logger\LoggerServiceInterface;
 use CkoCheckoutPayment\Components\OrderProvider\OrderProviderServiceInterface;
 use CkoCheckoutPayment\Components\PaymentMethods\SepaPaymentMethod;
-use CkoCheckoutPayment\Components\PaymentMethodValidator\PaymentMethodValidatorServiceInterface;
 use CkoCheckoutPayment\Components\PaymentSession\PaymentSessionServiceInterface;
 use Enlight\Event\SubscriberInterface;
 use Shopware\Bundle\AttributeBundle\Service\DataPersisterInterface;
+use Shopware\Models\Order\Order;
 
 class OrderSubscriber implements SubscriberInterface
 {
@@ -25,11 +25,6 @@ class OrderSubscriber implements SubscriberInterface
     private $orderProviderService;
 
     /**
-     * @var PaymentMethodValidatorServiceInterface
-     */
-    private $paymentMethodValidatorService;
-
-    /**
      * @var PaymentSessionServiceInterface
      */
     private $paymentSessionService;
@@ -42,13 +37,11 @@ class OrderSubscriber implements SubscriberInterface
     public function __construct(
         DataPersisterInterface $dataPersister,
         OrderProviderServiceInterface $orderProviderService,
-        PaymentMethodValidatorServiceInterface $paymentMethodValidatorService,
         PaymentSessionServiceInterface $paymentSessionService,
         LoggerServiceInterface $loggerService
     ) {
         $this->dataPersister = $dataPersister;
         $this->orderProviderService = $orderProviderService;
-        $this->paymentMethodValidatorService = $paymentMethodValidatorService;
         $this->paymentSessionService = $paymentSessionService;
         $this->loggerService = $loggerService;
     }
@@ -60,29 +53,46 @@ class OrderSubscriber implements SubscriberInterface
         ];
     }
 
-    public function onOrderCreated(\Enlight_Event_EventArgs $args)
+    public function onOrderCreated(\Enlight_Event_EventArgs $args): void
     {
         $orderId = (int)$args->get('orderId');
-        $mandateReference = $this->paymentSessionService->getMandateReference();
 
-        if (!$orderId || !$mandateReference) {
+        if (!$orderId) {
             return;
         }
 
         try {
-            $order = $this->orderProviderService->getOrderById((int)$args->get('orderId'));
+            $order = $this->orderProviderService->getOrderById($orderId);
 
-            if ($order->getPayment()->getName() !== SepaPaymentMethod::NAME) {
-                return;
+            if ($order->getPayment()->getName() === SepaPaymentMethod::NAME) {
+                $this->setSepaMandateReference($this->paymentSessionService->getMandateReference(), $order);
             }
+        } catch (\Throwable $e) {
+            $this->loggerService->error(
+                sprintf('order not found for order id: %d', $orderId),
+                [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]
+            );
+        }
+    }
 
+    private function setSepaMandateReference(string $mandateReference, Order $order): void
+    {
+        if (!$mandateReference) {
+            return;
+        }
+
+        try {
             $this->dataPersister->persist(['cko_mandate_reference' => $mandateReference], 's_order_attributes', $order->getId());
         } catch (\Throwable $e) {
             $this->loggerService->error(
-                sprintf('updating order attributes has failed for order id: %d', $orderId),
+                sprintf('updating order attributes has failed for order id: %d', $order->getId()),
                 [
                     'message' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
+                    'orderId' => $order->getId(),
                     'mandateReference' => $mandateReference
                 ]
             );

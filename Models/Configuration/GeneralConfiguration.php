@@ -51,6 +51,13 @@ class GeneralConfiguration extends ModelEntity
     private $publicKey;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="webhook_signature_key", type="string")
+     */
+    private $webhookSignatureKey;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -128,6 +135,22 @@ class GeneralConfiguration extends ModelEntity
     public function setPublicKey(string $publicKey): void
     {
         $this->publicKey = $publicKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebhookSignatureKey(): string
+    {
+        return $this->webhookSignatureKey;
+    }
+
+    /**
+     * @param string $webhookSignatureKey
+     */
+    public function setWebhookSignatureKey(string $webhookSignatureKey): void
+    {
+        $this->webhookSignatureKey = $webhookSignatureKey;
     }
 
     public function toArray()

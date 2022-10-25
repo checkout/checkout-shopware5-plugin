@@ -19,7 +19,7 @@ class CheckoutApiClientService implements CheckoutApiClientServiceInterface
         $this->configurationService = $configurationService;
     }
 
-    public function createClient(?int $shopId): CheckoutApi
+    public function createClient(?int $shopId)/*: CheckoutApi*/
     {
         $configuration = $this->configurationService->getGeneralConfiguration($shopId);
 

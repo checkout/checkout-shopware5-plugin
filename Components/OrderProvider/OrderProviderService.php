@@ -4,28 +4,27 @@ declare(strict_types=1);
 
 namespace CkoCheckoutPayment\Components\OrderProvider;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Order\Order;
+use Shopware\Models\Order\Repository as OrderRepository;
 use Shopware\Models\Order\Status as OrderStatus;
 
 class OrderProviderService implements OrderProviderServiceInterface
 {
     /**
-     * @var ObjectRepository
+     * @var OrderRepository
      */
     private $orderRepository;
 
     /**
-     * @var ObjectRepository
+     * @var OrderRepository
      */
     private $orderStatusRepository;
 
-    public function __construct(
-        ObjectRepository $orderRepository,
-        ObjectRepository $orderStatusRepository
-    ) {
-        $this->orderRepository = $orderRepository;
-        $this->orderStatusRepository = $orderStatusRepository;
+    public function __construct(ModelManager $modelManager)
+    {
+        $this->orderRepository = $modelManager->getRepository(Order::class);
+        $this->orderStatusRepository = $modelManager->getRepository(OrderStatus::class);
     }
 
     public function getOrderById(int $orderId): Order

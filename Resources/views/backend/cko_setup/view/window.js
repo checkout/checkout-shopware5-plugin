@@ -32,6 +32,7 @@ Ext.define('Shopware.apps.CkoSetup.view.Window', {
         items.push(Ext.create('Shopware.apps.CkoSetup.view.setup.Sepa.Window'));
         items.push(Ext.create('Shopware.apps.CkoSetup.view.setup.CreditCard.Window'));
         items.push(Ext.create('Shopware.apps.CkoSetup.view.setup.Paypal.Window'));
+        items.push(Ext.create('Shopware.apps.CkoSetup.view.setup.Sofort.Window'));
 
         return Ext.create('Ext.tab.Panel', {
             name: 'main-tab',

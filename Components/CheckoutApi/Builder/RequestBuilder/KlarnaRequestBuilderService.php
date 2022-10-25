@@ -13,8 +13,8 @@ use CkoCheckoutPayment\Components\CheckoutApi\ApiClient\CheckoutApiClientService
 use CkoCheckoutPayment\Components\CheckoutApi\Structs\KlarnaRequestDataStruct;
 use CkoCheckoutPayment\Components\DependencyProvider\DependencyProviderServiceInterface;
 use CkoCheckoutPayment\Components\Logger\LoggerServiceInterface;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Shopware\Models\Country\Country;
+use Shopware\Models\Country\Repository as CountryRepository;
 use Shopware\Models\Shop\Shop;
 
 class KlarnaRequestBuilderService implements KlarnaRequestBuilderServiceInterface
@@ -53,7 +53,7 @@ class KlarnaRequestBuilderService implements KlarnaRequestBuilderServiceInterfac
     private $loggerService;
 
     /**
-     * @var ObjectRepository
+     * @var CountryRepository
      */
     private $countryRepository;
 
@@ -61,7 +61,7 @@ class KlarnaRequestBuilderService implements KlarnaRequestBuilderServiceInterfac
         DependencyProviderServiceInterface $dependencyProviderService,
         CheckoutApiClientServiceInterface $apiClientService,
         LoggerServiceInterface $loggerService,
-        ObjectRepository $countryRepository
+        CountryRepository $countryRepository
     ) {
         $this->dependencyProviderService = $dependencyProviderService;
         $this->apiClientService = $apiClientService;

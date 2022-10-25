@@ -17,8 +17,8 @@ use CkoCheckoutPayment\Components\Configuration\ConfigurationServiceInterface;
 use CkoCheckoutPayment\Components\DependencyProvider\DependencyProviderServiceInterface;
 use CkoCheckoutPayment\Components\Logger\LoggerServiceInterface;
 use CkoCheckoutPayment\Components\PaymentSession\PaymentSessionServiceFactory;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Shopware\Models\Country\Country;
+use Shopware\Models\Country\Repository as CountryRepository;
 
 abstract class AbstractCheckoutPaymentService
 {
@@ -51,7 +51,7 @@ abstract class AbstractCheckoutPaymentService
     protected $loggerService;
 
     /**
-     * @var ObjectRepository
+     * @var CountryRepository
      */
     protected $countryRepository;
 
@@ -61,7 +61,7 @@ abstract class AbstractCheckoutPaymentService
         DependencyProviderServiceInterface $dependencyProviderService,
         PaymentSessionServiceFactory $paymentSessionServiceFactory,
         LoggerServiceInterface $loggerService,
-        ObjectRepository $countryRepository
+        CountryRepository $countryRepository
     ) {
         $this->apiClientService = $apiClientService;
         $this->configurationService = $configurationService;
@@ -96,7 +96,7 @@ abstract class AbstractCheckoutPaymentService
         return $this->dependencyProviderService->getShop()->getId();
     }
 
-    protected function createApiClient(): CheckoutApi
+    protected function createApiClient()/*: CheckoutApi*/
     {
         $shopId = $this->getShopId();
 
@@ -133,7 +133,7 @@ abstract class AbstractCheckoutPaymentService
         $payment->amount = $this->calculateAmount($paymentRequestStruct->getAmount());
         $payment->success_url = $paymentRequestStruct->getSuccessUrl();
         $payment->failure_url = $paymentRequestStruct->getFailureUrl();
-        $payment->metadata = array_merge((array)$payment->getValue('metadata'), $this->createMetaData());
+        $payment->metadata = $this->createMetaData();
 
         $user = $paymentRequestStruct->getUser();
         $payment->customer = $this->createCreateCustomerData($user);

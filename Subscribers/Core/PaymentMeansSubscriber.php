@@ -7,6 +7,7 @@ namespace CkoCheckoutPayment\Subscribers\Core;
 use CkoCheckoutPayment\Components\Configuration\ConfigurationServiceInterface;
 use CkoCheckoutPayment\Components\DependencyProvider\DependencyProviderServiceInterface;
 use CkoCheckoutPayment\Components\PaymentMethods\PayPalPaymentMethod;
+use CkoCheckoutPayment\Components\PaymentMethods\SofortPaymentMethod;
 use CkoCheckoutPayment\Components\PaymentMethodValidator\PaymentMethodValidatorServiceInterface;
 use Enlight\Event\SubscriberInterface;
 
@@ -71,6 +72,17 @@ class PaymentMeansSubscriber implements SubscriberInterface
     private function getFilteredPaymentMethods(array $paymentMethods): array
     {
         return array_filter($paymentMethods, function ($paymentMethod): bool {
+            // show the payment methods for sofort and paypal even if there is no configuration
+            // these payment methods do not need any configuration
+
+            if ($paymentMethod['name'] === SofortPaymentMethod::NAME) {
+                return false;
+            }
+
+            if ($paymentMethod['name'] === PayPalPaymentMethod::NAME) {
+                return false;
+            }
+
             return $this->paymentMethodValidatorService->isCheckoutPaymentMethod($paymentMethod['name']);
         });
     }

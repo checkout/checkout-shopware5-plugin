@@ -7,11 +7,10 @@
          data-cko-checkout-payment-google-pay-environment="{$ckoGooglePayEnvironment}"
          data-cko-checkout-payment-google-pay-currency="{$ckoCurrentCurrency}"
          data-cko-checkout-payment-google-pay-total-price="{$ckoTotalPrice}"
+         data-cko-checkout-payment-google-pay-button-color="{$ckoGooglePayButtonColor}"
          class="checkout-payment-google-pay-container">
         {block name="frontend_checkout_payment_cko_checkout_payment_google_pay_container_pay_button"}
-            <button type="button"
-                    id="cko-google-pay-button"
-                    class="google-pay google-pay-button-{$ckoGooglePayButtonColor} is--hidden"></button>
+            <div id="cko-google-pay-button-container"></div>
         {/block}
     </div>
 {/block}

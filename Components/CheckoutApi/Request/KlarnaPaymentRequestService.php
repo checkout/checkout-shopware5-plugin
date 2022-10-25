@@ -7,8 +7,8 @@ namespace CkoCheckoutPayment\Components\CheckoutApi\Request;
 use Checkout\Library\Exceptions\CheckoutException;
 use Checkout\Models\Payments\Payment;
 use CkoCheckoutPayment\Components\CheckoutApi\AbstractCheckoutPaymentService;
-use CkoCheckoutPayment\Components\CheckoutApi\Builder\RequestBuilder\KlarnaRequestBuilderServiceInterface;
 use CkoCheckoutPayment\Components\CheckoutApi\ApiClient\CheckoutApiClientServiceInterface;
+use CkoCheckoutPayment\Components\CheckoutApi\Builder\RequestBuilder\KlarnaRequestBuilderServiceInterface;
 use CkoCheckoutPayment\Components\CheckoutApi\Exception\CheckoutApiRequestException;
 use CkoCheckoutPayment\Components\CheckoutApi\Exception\RequiredPaymentDetailsMissingException;
 use CkoCheckoutPayment\Components\CheckoutApi\Structs\Payment\PaymentRequestStruct;
@@ -19,8 +19,8 @@ use CkoCheckoutPayment\Components\Logger\LoggerServiceInterface;
 use CkoCheckoutPayment\Components\PaymentMethods\KlarnaPaymentMethod;
 use CkoCheckoutPayment\Components\PaymentSession\PaymentSessionServiceFactory;
 use CkoCheckoutPayment\Components\RequestConstants;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Shopware\Models\Country\Country;
+use Shopware\Models\Country\Repository as CountryRepository;
 
 class KlarnaPaymentRequestService extends AbstractCheckoutPaymentService implements PaymentRequestServiceInterface
 {
@@ -35,7 +35,7 @@ class KlarnaPaymentRequestService extends AbstractCheckoutPaymentService impleme
         DependencyProviderServiceInterface $dependencyProviderService,
         PaymentSessionServiceFactory $paymentSessionServiceFactory,
         LoggerServiceInterface $loggerService,
-        ObjectRepository $countryRepository,
+        CountryRepository $countryRepository,
         KlarnaRequestBuilderServiceInterface $klarnaRequestBuilderService
     ) {
         parent::__construct(

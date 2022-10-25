@@ -18,9 +18,11 @@ use CkoCheckoutPayment\Components\Configuration\ConfigurationServiceInterface;
 use CkoCheckoutPayment\Components\DependencyProvider\DependencyProviderServiceInterface;
 use CkoCheckoutPayment\Components\Logger\LoggerServiceInterface;
 use CkoCheckoutPayment\Components\PaymentMethods\CreditCardPaymentMethod;
+use CkoCheckoutPayment\Components\PaymentMethods\SofortPaymentMethod;
 use CkoCheckoutPayment\Components\PaymentSession\PaymentSessionServiceInterface;
 use CkoCheckoutPayment\Components\RequestConstants;
 use CkoCheckoutPayment\Components\Structs\CardStruct;
+use CkoCheckoutPayment\Models\Configuration\SofortConfiguration;
 use Shopware\Models\Order\Status as OrderStatus;
 
 abstract class AbstractCheckoutPaymentFrontendController extends \Shopware_Controllers_Frontend_Payment
@@ -100,13 +102,13 @@ abstract class AbstractCheckoutPaymentFrontendController extends \Shopware_Contr
             $shopId = $this->dependencyProviderService->getShop()->getId();
 
             if (!$this->configurationService->isCreditCart3dsEnabled($shopId) && $paymentRequestStruct->getPaymentMethodName() === CreditCardPaymentMethod::NAME) {
-                $this->handlePaymentResponse($paymentResponse->getPaymentId(), $shopId);
+                $this->handlePaymentResponse($paymentResponse->getPaymentId(), $shopId, $paymentRequestStruct);
 
                 return;
             }
 
             if ($paymentResponse->getStatus() === CheckoutApiPaymentStatus::API_PAYMENT_PENDING && !$paymentResponse->getRedirectionUrl()) {
-                $this->handlePaymentResponse($paymentResponse->getPaymentId(), $shopId);
+                $this->handlePaymentResponse($paymentResponse->getPaymentId(), $shopId, $paymentRequestStruct);
 
                 return;
             }
@@ -117,7 +119,7 @@ abstract class AbstractCheckoutPaymentFrontendController extends \Shopware_Contr
                 return;
             }
 
-            $this->handlePaymentResponse($paymentResponse->getPaymentId(), $shopId);
+            $this->handlePaymentResponse($paymentResponse->getPaymentId(), $shopId, $paymentRequestStruct);
         } catch (RequiredPaymentDetailsMissingException $requiredPaymentDetailsMissingException) {
             $this->loggerService->error($requiredPaymentDetailsMissingException->getMessage());
             $this->handleFailedResponse();
@@ -130,7 +132,7 @@ abstract class AbstractCheckoutPaymentFrontendController extends \Shopware_Contr
         }
     }
 
-    protected function handlePaymentResponse(string $paymentId, ?int $shopId): void
+    protected function handlePaymentResponse(string $paymentId, ?int $shopId, PaymentRequestStruct $paymentRequestStruct): void
     {
         $basketSignature = $this->paymentSessionService->get(RequestConstants::BASKET_SIGNATURE);
 
@@ -146,10 +148,12 @@ abstract class AbstractCheckoutPaymentFrontendController extends \Shopware_Contr
 			$this->saveCreditcardSource($paymentDetailsResponse->getSource());
 		}
 
+        $paymentStatusId = $this->getPaymentStatusId($paymentRequestStruct, $shopId);
+
         $this->saveOrder(
             $paymentId,
             $this->paymentSessionService->getPaymentReference(),
-            OrderStatus::PAYMENT_STATE_OPEN
+            $paymentStatusId
         );
         $this->paymentSessionService->clearPaymentSession();
 
@@ -221,6 +225,24 @@ abstract class AbstractCheckoutPaymentFrontendController extends \Shopware_Contr
 
         $this->Response()->setHeader('Content-type', 'application/json', true);
         $this->Response()->setBody(json_encode($data));
+    }
+
+    private function getPaymentStatusId(PaymentRequestStruct $paymentRequestStruct, ?int $shopId): int
+    {
+        if ($paymentRequestStruct->getPaymentMethodName() === SofortPaymentMethod::NAME) {
+            try {
+                /** @var SofortConfiguration $configuration */
+                $configuration = $this->configurationService->getPaymentMethodConfiguration(SofortPaymentMethod::NAME, $shopId);
+
+                return $configuration->getPaymentStatusAuthId();
+            } catch (\RuntimeException $exception) {
+                // in case of the configuration was not found return the default payment status
+
+                return OrderStatus::PAYMENT_STATE_OPEN;
+            }
+        }
+
+        return OrderStatus::PAYMENT_STATE_OPEN;
     }
 
     private function getPurpose(): string

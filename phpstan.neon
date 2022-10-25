@@ -1,0 +1,10 @@
+parameters:
+  checkMissingIterableValueType: false
+  level: 1
+  bootstrapFiles:
+    - vendor/autoload.php
+    - ../../../autoload.php
+  excludes_analyse:
+    - Controllers
+    - vendor
+    - node_modules

@@ -37,7 +37,8 @@ class WebhooksService
     public function __construct(
         LoggerService $loggerService,
         ModelManager $modelManager
-    ) {
+    )
+    {
         $this->loggerService = $loggerService;
         $this->modelManager = $modelManager;
         $this->orderRepository = $this->modelManager->getRepository(Order::class);
@@ -58,7 +59,7 @@ class WebhooksService
         if (!$order) {
             $this->loggerService->error("Unable to capture order for payment id {$paymentId} order was not found");
 
-            throw new \Exception("Order {$paymentId} not found"); //TODO: properly handle order not found
+            return;
         }
 
         $this->setOrderPaymentStatus($paymentId, Status::PAYMENT_STATE_COMPLETELY_PAID);
@@ -90,14 +91,24 @@ class WebhooksService
         /** @var Order $order */
         $order = $this->orderRepository->findOneBy(['transactionId' => $paymentId]);
 
-        if ($order) {
-            /** @var Status $status */
-            $status = $this->statusRepository->find($paymentStatus);
+        if (!$order) {
+            $this->loggerService->error("Unable to set payment status for PaymentID {$paymentId} order was not found");
 
-            $order->setPaymentStatus($status);
-            $this->modelManager->flush();
-
-            $this->loggerService->info("Order for PaymentID {$paymentId} set to approved");
+            return;
         }
+
+        /** @var Status $status */
+        $status = $this->statusRepository->find($paymentStatus);
+
+        if (!$status) {
+            $this->loggerService->error("Unable to set payment status for PaymentID {$paymentId} status {$paymentStatus} was not found");
+
+            return;
+        }
+
+        $order->setPaymentStatus($status);
+        $this->modelManager->flush();
+
+        $this->loggerService->info("Order for PaymentID {$paymentId} set to {$paymentStatus}");
     }
 }

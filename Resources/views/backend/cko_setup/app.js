@@ -13,6 +13,7 @@ Ext.define('Shopware.apps.CkoSetup', {
         'ApplePay',
         'GooglePay',
         'Sepa',
+        'Sofort',
         'CreditCard',
         'Paypal'
     ],
@@ -29,6 +30,8 @@ Ext.define('Shopware.apps.CkoSetup', {
         'setup.GooglePay.Configuration',
         'setup.Sepa.Window',
         'setup.Sepa.Configuration',
+        'setup.Sofort.Window',
+        'setup.Sofort.Configuration',
         'setup.CreditCard.Window',
         'setup.CreditCard.Configuration',
         'setup.Paypal.Window',
@@ -41,6 +44,7 @@ Ext.define('Shopware.apps.CkoSetup', {
         'ApplePay.Configuration',
         'GooglePay.Configuration',
         'Sepa.Configuration',
+        'Sofort.Configuration',
         'CreditCard.Configuration',
         'Paypal.Configuration'
     ],

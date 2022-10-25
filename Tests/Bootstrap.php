@@ -19,6 +19,10 @@ class CkoCheckoutPaymentTestKernel extends \Shopware\Kernel
         }
 
         Shopware()->Loader()->registerNamespace(self::PLUGIN_NAME, __DIR__.'/../');
+
+        // fix for Fatal error: Uncaught TypeError: date() expects parameter 2 to be integer, string given in vendor/phpunit/php-code-coverage/src/Report/Html/Facade.php:63
+        // only happens with php 7.2 and phpunit code coverage driver
+        $_SERVER['REQUEST_TIME'] = (int) $_SERVER['REQUEST_TIME'];
     }
 
     private static function isPluginInstalledAndActivated(): bool

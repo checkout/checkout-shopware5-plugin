@@ -81,6 +81,10 @@ class DocumentInstaller implements InstallerInterface
 
     public function uninstall(UninstallContext $context): void
     {
+        if ($context->keepUserData()) {
+            return;
+        }
+
         $this->connection->exec('DELETE FROM s_core_documents_box WHERE `name` LIKE "%CkoCheckoutPayment%"');
     }
 

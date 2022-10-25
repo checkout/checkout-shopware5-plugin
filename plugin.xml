@@ -3,15 +3,41 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.6/engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">CkoCheckoutPayment</label>
     <label lang="en">CkoCheckoutPayment</label>
-    <version>1.0.1</version>
+    <version>1.0.7</version>
     <copyright>(c) by checkout.com</copyright>
-    <license>GPL</license>
+    <license>GPL-3.0-only</license>
     <link>http://checkout.com</link>
     <author>checkout.com</author>
 	<description lang="de">Checkout.com Zahlungsanbieter API</description>
 	<description lang="en">Checkout.com Unified Payments API</description>
 
     <compatibility minVersion="5.6.0"/>
+
+    <changelog version="1.0.7">
+        <changes lang="de">Google Pay 3DS check hinzugefügt</changes>
+        <changes lang="en">Added Google Pay 3DS check</changes>
+    </changelog>
+
+
+    <changelog version="1.0.6">
+        <changes lang="de">Webhook Schlüssel hinzugefügt</changes>
+        <changes lang="en">Add Webhook Signature Key</changes>
+    </changelog>
+
+    <changelog version="1.0.5">
+        <changes lang="de">Shopware 5.7 Kompatibilität</changes>
+        <changes lang="en">Shopware 5.7 compatability</changes>
+    </changelog>
+
+    <changelog version="1.0.4">
+        <changes lang="de">Zahlungsstatus für SOFORT Zahlungen hinzugefügt</changes>
+        <changes lang="en">Add payment status for SOFORT payments</changes>
+    </changelog>
+
+    <changelog version="1.0.3">
+        <changes lang="de">Logo von Google Pay ausgetauscht</changes>
+        <changes lang="en">Changed logo of Google Pay</changes>
+    </changelog>
 
 	<changelog version="1.0.1">
 		<changes lang="de">Behebung der Eventverarbeitungs-Reihenfolge</changes>

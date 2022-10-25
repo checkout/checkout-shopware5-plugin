@@ -103,7 +103,7 @@ class PaymentMethodInstaller implements InstallerInterface
                 'position' => $paymentMethod->getPosition(),
                 'additionalDescription' => $paymentMethod->getAdditionalDescription()
             ];
-            $this->paymentInstaller->createOrUpdate($context->getPlugin(), $options);
+            $this->paymentInstaller->createOrUpdate($context->getPlugin()->getName(), $options);
         }
     }
 

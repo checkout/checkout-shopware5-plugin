@@ -15,12 +15,12 @@ class GooglePayPaymentMethod implements PaymentMethodInterface
 
     public function getDescription(): string
     {
-        return 'Google pay';
+        return 'Google Pay';
     }
 
     public function getAdditionalDescription(): string
     {
-        return 'Google pay payment';
+        return 'Google Pay payment';
     }
 
     public function getAction(): string

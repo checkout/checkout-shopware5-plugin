@@ -2,20 +2,14 @@
 
 declare(strict_types=1);
 
-use CkoCheckoutPayment\Components\CheckoutApi\CheckoutApiPaymentStatus;
 use CkoCheckoutPayment\Components\Configuration\ConfigurationServiceInterface;
 use CkoCheckoutPayment\Components\Logger\LoggerServiceInterface;
-use CkoCheckoutPayment\Components\Webhooks\WebhooksService;
 use CkoCheckoutPayment\Models\Event;
 use Shopware\Components\CSRFWhitelistAware;
+use Shopware\Components\Model\ModelManager;
 
 class Shopware_Controllers_Frontend_CkoCheckoutWebhook extends Enlight_Controller_Action implements CSRFWhitelistAware
 {
-    /**
-     * @var WebhooksService
-     */
-    private $webhookService;
-
     /**
      * @var ConfigurationServiceInterface
      */
@@ -25,8 +19,9 @@ class Shopware_Controllers_Frontend_CkoCheckoutWebhook extends Enlight_Controlle
      * @var LoggerServiceInterface
      */
     private $logger;
+
     /**
-     * @var \Shopware\Components\Model\ModelManager
+     * @var ModelManager
      */
     private $modelManager;
 
@@ -36,7 +31,6 @@ class Shopware_Controllers_Frontend_CkoCheckoutWebhook extends Enlight_Controlle
 
         $this->Front()->Plugins()->ViewRenderer()->setNoRender();
 
-        $this->webhookService = $this->get('cko_checkout_payment.components.webhooks.webhooks_service');
         $this->config = $this->get('cko_checkout_payment.components.configuration.configuration_service');
         $this->modelManager = $this->get('models');
         $this->logger = $this->get('cko_checkout_payment.components.logger.logger_service');
@@ -55,13 +49,7 @@ class Shopware_Controllers_Frontend_CkoCheckoutWebhook extends Enlight_Controlle
         $content = $this->Request()->getContent();
         $event = json_decode($content, true);
 
-        $signature = $this->Request()->getHeader('CKO-Signature');
-        $messageHash = hash_hmac('sha256', $content, $this->config->getGeneralConfiguration(null)->getPrivateKey());
-
-        if ($signature !== $messageHash) {
-            $this->logger->error(sprintf("Invalid event signature. Got '%s' is '%s'", $signature, $messageHash), [self::class]);
-            throw new Exception("Invalid hash");
-        }
+        $this->validateSignature($content);
 
         $eventId = $event['id'];
         $eventType = $event['type'];
@@ -82,5 +70,18 @@ class Shopware_Controllers_Frontend_CkoCheckoutWebhook extends Enlight_Controlle
 
 
         return $this->Response()->setBody('');
+    }
+
+    private function validateSignature(string $content)
+    {
+        $signature = $this->Request()->getHeader('CKO-Signature');
+        $configuration = $this->config->getGeneralConfiguration(null);
+        $messageHashForPrivateKey = hash_hmac('sha256', $content, $configuration->getPrivateKey());
+        $messageHashForWebhookSignatureKey = hash_hmac('sha256', $content, $configuration->getWebhookSignatureKey());
+
+        if($signature !== $messageHashForWebhookSignatureKey && $signature !== $messageHashForPrivateKey) {
+            $this->logger->error(sprintf("Invalid event signature. Expected '%s' | Is '%s' and '%s'", $signature, $messageHashForPrivateKey, $messageHashForWebhookSignatureKey), [self::class]);
+            throw new Exception("Invalid hash");
+        }
     }
 }

@@ -8,7 +8,7 @@ use Checkout\CheckoutApi;
 
 interface CheckoutApiClientServiceInterface
 {
-    public function createClient(?int $shopId): CheckoutApi;
+    public function createClient(?int $shopId)/*: CheckoutApi*/;
 
     public function getPublicKey(?int $shopId): ?string;
 
