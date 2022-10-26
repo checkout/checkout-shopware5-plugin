@@ -11,10 +11,13 @@ Ext.define('Shopware.apps.CkoCheckoutPayment.view.detail.Window', {
     },
 
     createTabPanel: function () {
-        var me = this,
-            tabPanel = this.callParent(arguments),
-            payment = this.record.getPayment().first(),
-            isCheckoutPayment = payment.get('name').substr(0, 4) === 'cko_';
+        var me = this;
+        var tabPanel = this.callParent(arguments);
+        var payment = this.record.getPayment().first();
+        if(!payment) {
+            return tabPanel;
+        }
+        var isCheckoutPayment = payment.get('name').substr(0, 4) === 'cko_';
 
         if (!isCheckoutPayment) {
             return tabPanel;

@@ -6,7 +6,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.CreditCard.Window', {
     alias: 'widget.cko-setup-credit-card-window',
     height: 450,
 
-    title: '{s name=window/tab/title}{/s}',
+    title: '{s name="window/tab/title"}{/s}',
     layout: 'fit',
     style: {
         background: '#F0F2F4;'
