@@ -10,7 +10,7 @@ Ext.define('Shopware.apps.CkoSetup.view.Window', {
 
     layout: 'fit',
 
-    title: '{s name=window/tab/title}{/s}',
+    title: '{s name="window/tab/title"}{/s}',
 
     topToolbar: null,
 

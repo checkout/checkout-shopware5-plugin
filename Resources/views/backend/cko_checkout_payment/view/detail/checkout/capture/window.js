@@ -8,7 +8,7 @@ Ext.define('Shopware.apps.CkoCheckoutPayment.view.detail.checkout.capture.Window
     height: '20%',
     layout: 'fit',
 
-    title: '{s name=title}{/s}',
+    title: '{s name="title"}{/s}',
 
     captureRecord: null,
 
@@ -48,8 +48,8 @@ Ext.define('Shopware.apps.CkoCheckoutPayment.view.detail.checkout.capture.Window
                         xtype: 'numberfield',
                         itemId: 'captureAmountField',
                         readOnly: false,
-                        fieldLabel: '{s name=field/captureAmount/label}{/s}',
-                        helpText: '{s name=field/captureAmount/helpText}{/s}',
+                        fieldLabel: '{s name="field/captureAmount/label"}{/s}',
+                        helpText: '{s name="field/captureAmount/helpText"}{/s}',
                         name: 'captureAmount',
                         allowBlank: true
                     }]
@@ -75,13 +75,13 @@ Ext.define('Shopware.apps.CkoCheckoutPayment.view.detail.checkout.capture.Window
                     borderBottom: '1px solid #A4B5C0'
                 },
                 items: ['->', {
-                    text: '{s name=close}{/s}',
+                    text: '{s name="close"}{/s}',
                     cls: 'secondary',
                     handler: function() {
                         me.close();
                     }
                 }, {
-                    text: '{s name=submitCapture}{/s}',
+                    text: '{s name="submitCapture"}{/s}',
                     cls: 'primary',
                     itemId: 'savebutton',
                     disabled: false,

@@ -3,7 +3,7 @@
 Ext.define('Shopware.apps.CkoSetup.view.setup.Paypal.Configuration', {
     extend: 'Ext.form.Panel',
     alias: 'widget.cko-setup-paypal-configuration',
-    title: '{s name=window/tab/title}{/s}',
+    title: '{s name="window/tab/title"}{/s}',
 
     anchor: '100%',
     border: false,

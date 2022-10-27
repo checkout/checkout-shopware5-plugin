@@ -52,7 +52,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.GeneralConfiguration', {
                 var decodedResponse = Ext.JSON.decode(response.responseText);
 
                 if (!decodedResponse.success) {
-                    me.showNotificationMessage('{s name=notification/growl/configuration/loadConfigurationErrorMessage}{/s}');
+                    me.showNotificationMessage('{s name="notification/growl/configuration/loadConfigurationErrorMessage"}{/s}');
                     me.disableConfigurationTab();
                 }
 
@@ -62,7 +62,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.GeneralConfiguration', {
                 configurationTab.loadRecord(me.configurationRecord);
             },
             failure: function () {
-                me.showNotificationMessage('{s name=notification/growl/configuration/loadConfigurationErrorMessage}{/s}');
+                me.showNotificationMessage('{s name="notification/growl/configuration/loadConfigurationErrorMessage"}{/s}');
             }
         });
     },
@@ -92,9 +92,9 @@ Ext.define('Shopware.apps.CkoSetup.controller.GeneralConfiguration', {
             },
             failure: function () {
                 if (response.status === 404) {
-                    me.showNotificationMessage('{s name=notification/growl/pluginNotActivatedErrorMessage}{/s}');
+                    me.showNotificationMessage('{s name="notification/growl/pluginNotActivatedErrorMessage"}{/s}');
                 } else {
-                    me.showNotificationMessage('{s name=notification/growl/checkApiCredentials/errorMessage}{/s}');
+                    me.showNotificationMessage('{s name="notification/growl/checkApiCredentials/errorMessage"}{/s}');
                 }
             }
         });
@@ -116,9 +116,9 @@ Ext.define('Shopware.apps.CkoSetup.controller.GeneralConfiguration', {
             },
             failure: function () {
                 if (response.status === 404) {
-                    me.showNotificationMessage('{s name=notification/growl/pluginNotActivatedErrorMessage}{/s}');
+                    me.showNotificationMessage('{s name="notification/growl/pluginNotActivatedErrorMessage"}{/s}');
                 } else {
-                    me.showNotificationMessage('{s name=notification/growl/registerWebhook/registrationErrorMessage}{/s}');
+                    me.showNotificationMessage('{s name="notification/growl/registerWebhook/registrationErrorMessage"}{/s}');
                 }
             }
         });
@@ -130,7 +130,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.GeneralConfiguration', {
             configurationValues = configurationTabForm.getValues();
 
         if (!configurationTabForm.isValid()) {
-            this.showNotificationMessage('{s name=notification/growl/configuration/formValidationErrorMessage}{/s}');
+            this.showNotificationMessage('{s name="notification/growl/configuration/formValidationErrorMessage"}{/s}');
 
             return;
         }
@@ -138,12 +138,12 @@ Ext.define('Shopware.apps.CkoSetup.controller.GeneralConfiguration', {
         this.configurationRecord.set(configurationValues);
         this.configurationRecord.save();
 
-        this.showNotificationMessage('{s name=notification/growl/configuration/saveSuccessfulMessage}{/s}');
+        this.showNotificationMessage('{s name="notification/growl/configuration/saveSuccessfulMessage"}{/s}');
     },
 
     showNotificationMessage: function (message) {
         Shopware.Notification.createGrowlMessage(
-            '{s name=notification/growl/title}{/s}',
+            '{s name="notification/growl/title"}{/s}',
             message
         );
     }

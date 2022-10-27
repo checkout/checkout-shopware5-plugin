@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.6/engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">CkoCheckoutPayment</label>
     <label lang="en">CkoCheckoutPayment</label>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <copyright>(c) by checkout.com</copyright>
     <license>GPL-3.0-only</license>
     <link>http://checkout.com</link>
@@ -12,6 +12,11 @@
 	<description lang="en">Checkout.com Unified Payments API</description>
 
     <compatibility minVersion="5.6.0"/>
+    
+    <changelog version="1.0.8">
+        <changes lang="de">Kompatibilitätsprobleme behoben</changes>
+        <changes lang="en">Fixed compatibility errors</changes>
+    </changelog>
 
     <changelog version="1.0.7">
         <changes lang="de">Google Pay 3DS check hinzugefügt</changes>

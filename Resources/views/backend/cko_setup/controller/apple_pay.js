@@ -62,7 +62,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
                 }
             },
             failure: function () {
-                me.showNotificationMessage('{s name=notification/growl/domainVerifyFile/openSslNotAvailableMessage}{/s}');
+                me.showNotificationMessage('{s name="notification/growl/domainVerifyFile/openSslNotAvailableMessage"}{/s}');
             }
         });
     },
@@ -81,7 +81,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
                 var decodedResponse = Ext.JSON.decode(response.responseText);
 
                 if (!decodedResponse.success) {
-                    me.showNotificationMessage('{s name=notification/growl/configuration/loadConfigurationErrorMessage}{/s}');
+                    me.showNotificationMessage('{s name="notification/growl/configuration/loadConfigurationErrorMessage"}{/s}');
                     me.disableConfigurationTab();
                 }
 
@@ -91,7 +91,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
                 configurationTab.loadRecord(me.configurationRecord);
             },
             failure: function () {
-                me.showNotificationMessage('{s name=notification/growl/configuration/loadConfigurationErrorMessage}{/s}');
+                me.showNotificationMessage('{s name="notification/growl/configuration/loadConfigurationErrorMessage"}{/s}');
             }
         });
     },
@@ -128,7 +128,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
                     var decodedResponse = Ext.JSON.decode(response.responseText);
 
                     if (!decodedResponse.success) {
-                        me.showNotificationMessage('{s name=notification/growl/certificateFile/unableToGenerateCertificateMessage}{/s}');
+                        me.showNotificationMessage('{s name="notification/growl/certificateFile/unableToGenerateCertificateMessage"}{/s}');
                     }
                 } catch (exception) {
                     // response seems to successful containing the certificate but not json
@@ -139,7 +139,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
                 }
             },
             failure: function () {
-                me.showNotificationMessage('{s name=notification/growl/certificateFile/unableToGenerateCertificateMessage}{/s}');
+                me.showNotificationMessage('{s name="notification/growl/certificateFile/unableToGenerateCertificateMessage"}{/s}');
             }
         });
     },
@@ -150,7 +150,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
             configurationValues = configurationTabForm.getValues();
 
         if (!configurationTabForm.isValid()) {
-            this.showNotificationMessage('{s name=notification/growl/configuration/formValidationErrorMessage}{/s}');
+            this.showNotificationMessage('{s name="notification/growl/configuration/formValidationErrorMessage"}{/s}');
 
             return;
         }
@@ -158,7 +158,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
         this.configurationRecord.set(configurationValues);
         this.configurationRecord.save();
 
-        this.showNotificationMessage('{s name=notification/growl/configuration/saveSuccessfulMessage}{/s}');
+        this.showNotificationMessage('{s name="notification/growl/configuration/saveSuccessfulMessage"}{/s}');
     },
 
     onClickGeneratePemCertificateButton: function (button) {
@@ -167,7 +167,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
             selectedFile = button.up('form').down('#applePayCertificateSelectFile').getValue();
 
         if (Ext.isEmpty(selectedFile)) {
-            me.showNotificationMessage('{s name=notification/growl/certificateFile/noFileSelectedMessage}{/s}');
+            me.showNotificationMessage('{s name="notification/growl/certificateFile/noFileSelectedMessage"}{/s}');
 
             return;
         }
@@ -192,7 +192,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
 		var form = selectedFile[0].up('form').getForm()
 
 		if (Ext.isEmpty(selectedFile)) {
-			me.showNotificationMessage('{s name=notification/growl/domainVerifyFile/noFileSelectedMessage}{/s}');
+			me.showNotificationMessage('{s name="notification/growl/domainVerifyFile/noFileSelectedMessage"}{/s}');
 
 			return;
 		}
@@ -202,7 +202,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
 			waitMsg: '{s name="upload/domainVerifyFile/waitMessage"}{/s}',
 			scope: me,
 			success: function(fp, response) {
-				me.showNotificationMessage('{s name=notification/growl/domainVerifyFile/uploadSuccessMessage}{/s}');
+				me.showNotificationMessage('{s name="notification/growl/domainVerifyFile/uploadSuccessMessage"}{/s}');
 
 				var mask = Ext.get(Ext.getBody().query('.x-mask'));
 				mask.hide();
@@ -220,7 +220,7 @@ Ext.define('Shopware.apps.CkoSetup.controller.ApplePay', {
 
     showNotificationMessage: function (message) {
         Shopware.Notification.createGrowlMessage(
-            '{s name=notification/growl/title}{/s}',
+            '{s name="notification/growl/title"}{/s}',
             message
         );
     }

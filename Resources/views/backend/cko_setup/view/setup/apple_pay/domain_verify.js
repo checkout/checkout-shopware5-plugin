@@ -4,7 +4,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
     extend: 'Ext.container.Container',
 
     alias: 'widget.cko-setup-applepay-domain-verify',
-    title: '{s name=window/tab/title}{/s}',
+    title: '{s name="window/tab/title"}{/s}',
     layout: 'fit',
     autoScroll: true,
 
@@ -71,10 +71,10 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
 		me.textField = Ext.create('Ext.form.FieldSet', {
 			columnWidth: 0.5,
 			flex: 1,
-			title: '{s name=window/tab/title}{/s}',
+			title: '{s name="window/tab/title"}{/s}',
 			items :[
 				{
-					fieldLabel: '{s name=input/label/domainVerifyFilePath}{/s}',
+					fieldLabel: '{s name="input/label/domainVerifyFilePath"}{/s}',
 					labelWidth: 120,
 					name: 'domainVerificationFilePathField',
 					allowBlank: false,
@@ -82,14 +82,14 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
 					anchor: '100%'
 				},
 				{
-					fieldLabel: '{s name=input/label/domainVerifyFile}{/s}',
+					fieldLabel: '{s name="input/label/domainVerifyFile"}{/s}',
 					multiple: false,
 					labelWidth: 120,
 					name: 'applePayDomainVerifyFile',
 					allowBlank: false,
 					xtype: 'filefield',
 					anchor: '100%',
-					buttonText: '{s name=button/field/label/selectFile}{/s}',
+					buttonText: '{s name="button/field/label/selectFile"}{/s}',
 					buttonConfig: {
 						cls: Ext.baseCSSPrefix + 'form-mediamanager-btn small secondary',
 						iconCls: 'sprite-plus-circle-frame'
@@ -99,7 +99,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
 					labelWidth: 120,
 					name: 'DomainVerificationUploadButton',
 					action: 'cko-setup-applepay-upload-domain-verify-file-button',
-					text: '{s name=button/uploadDomainVerifyFile}{/s}',
+					text: '{s name="button/uploadDomainVerifyFile"}{/s}',
 					xtype: 'button',
 					anchor: '100%'
 				}
@@ -128,9 +128,9 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
         var me = this;
 
         me.addBtn = Ext.create('Ext.form.field.File', {
-            emptyText: '{s name=input/label/domainVerifyFile}{/s}',
+            emptyText: '{s name="input/label/domainVerifyFile"}{/s}',
             margin: '5 0 0 2',
-            buttonText: '{s name=button/field/label/selectFile}{/s}',
+            buttonText: '{s name="button/field/label/selectFile"}{/s}',
             buttonConfig: {
                 cls: Ext.baseCSSPrefix + 'form-mediamanager-btn small secondary',
                 iconCls: 'sprite-plus-circle-frame'
@@ -139,7 +139,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
             itemId: 'domainVerifySelectFile',
             width: me.configWidth,
             labelWidth: me.configLabelWidth,
-            fieldLabel: '{s name=input/label/domainVerifyFile}{/s}'
+            fieldLabel: '{s name="input/label/domainVerifyFile"}{/s}'
         });
 
         return me.addBtn;
@@ -154,7 +154,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.DomainVerify', {
 
 	showNotificationMessage: function (message) {
 		Shopware.Notification.createGrowlMessage(
-			'{s name=notification/growl/title}{/s}',
+			'{s name="notification/growl/title"}{/s}',
 			message
 		);
 	},

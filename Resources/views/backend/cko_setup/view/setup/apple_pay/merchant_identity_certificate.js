@@ -4,7 +4,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.MerchantIdentityCertifica
     extend: 'Ext.container.Container',
 
     alias: 'widget.cko-setup-applepay-merchant-identity-certificate',
-    title: '{s name=window/tab/title}{/s}',
+    title: '{s name="window/tab/title"}{/s}',
     layout: 'fit',
     autoScroll: true,
 
@@ -84,10 +84,10 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.MerchantIdentityCertifica
         var me = this;
 
         me.addBtn = Ext.create('Ext.form.field.File', {
-            emptyText: '{s name=input/label/certificateFile/emptyText}{/s}',
-            helpText: '{s name=input/label/certificateFile/helpText}{/s}',
+            emptyText: '{s name="input/label/certificateFile/emptyText"}{/s}',
+            helpText: '{s name="input/label/certificateFile/helpText"}{/s}',
             margin: '5 0 0 2',
-            buttonText: '{s name=button/field/label/selectFile}{/s}',
+            buttonText: '{s name="button/field/label/selectFile"}{/s}',
             buttonConfig: {
                 cls: Ext.baseCSSPrefix + 'form-mediamanager-btn small secondary',
                 iconCls: 'sprite-plus-circle-frame'
@@ -96,7 +96,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.MerchantIdentityCertifica
             itemId: 'applePayCertificateSelectFile',
             width: me.configWidth,
             labelWidth: me.configLabelWidth,
-            fieldLabel: '{s name=input/label/certificateFile}{/s}'
+            fieldLabel: '{s name="input/label/certificateFile"}{/s}'
         });
 
         return me.addBtn;
@@ -127,7 +127,7 @@ Ext.define('Shopware.apps.CkoSetup.view.setup.ApplePay.MerchantIdentityCertifica
         var me = this;
 
         return Ext.create('Ext.button.Button', {
-            text: '{s name=button/generatePemCertificate}{/s}',
+            text: '{s name="button/generatePemCertificate"}{/s}',
             cls: 'primary',
             iconCls: 'sprite-plus-circle',
             padding: '10px 200px',
